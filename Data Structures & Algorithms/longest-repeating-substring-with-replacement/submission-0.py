@@ -1,0 +1,18 @@
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        res = 0
+        seen = defaultdict(int)
+
+        # 1. slide window add new chars
+        l = 0
+        for r in range(len(s)):
+            seen[s[r]] += 1
+
+            # 2. validate: w_len - most_seen_c should be <= k
+            while (r - l + 1) - max(seen.values()) > k:
+                seen[s[l]] -= 1
+                l += 1
+
+            res = max(res, r - l + 1)
+
+        return res    
